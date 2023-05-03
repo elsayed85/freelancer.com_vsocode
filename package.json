@@ -1,0 +1,111 @@
+{
+  "name": "freelancerCom",
+  "displayName": "freelancerCom",
+  "description": "Freelancer.com extension for Visual Studio Code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.77.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "properties": {
+    "freelancerJobs.openaiApiKey": {
+      "type": "string",
+      "default": "",
+      "description": "Your API Key for OpenAI"
+    },
+    "freelancerJobs.aboutMe": {
+      "type": "string",
+      "default": "",
+      "description": "tell us about yourself"
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "freelancerJobs.openInBrowser",
+        "title": "Open in Browser"
+      },
+      {
+        "command": "freelancerJobs.generateProposal",
+        "title": "Generate Proposal"
+      },
+      {
+        "command": "freelancerJobs.clearProposal",
+        "title": "Clear Proposal"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "freelancerJobs.openInBrowser",
+          "when": "viewItem == jobItem",
+          "group": "navigation"
+        },
+        {
+          "command": "freelancerJobs.generateProposal",
+          "when": "viewItem == jobItem",
+          "group": "navigation"
+        },
+        {
+          "command": "freelancerJobs.clearProposal",
+          "when": "viewItem == jobItem",
+          "group": "navigation"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "freelancerJobs",
+          "title": "Freelancer Jobs",
+          "icon": "./media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "freelancerJobs": [
+        {
+          "id": "freelancerJobsView",
+          "name": "Freelancer Jobs"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/request": "^2.48.8",
+    "@types/vscode": "^1.77.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "@vscode/test-electron": "^2.3.0",
+    "eslint": "^8.39.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-fetch": "^3.3.1",
+    "openai": "^3.2.1"
+  }
+}
